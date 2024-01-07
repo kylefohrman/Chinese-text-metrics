@@ -1,0 +1,7 @@
+# exclude files in output folder
+output/*
+output.txt
+lib/__pycache__/*
+
+#exception to the rule
+!output/.gitkeep
