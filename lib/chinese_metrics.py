@@ -4,20 +4,31 @@
 from collections import Counter
 from pathlib import Path
 import re
+import unicodedata
+
+def strip_accents(s):
+	return ''.join(c for c in unicodedata.normalize('NFD', s) if unicodedata.category(c) != 'Mn')
 
 def chineseMetrics(lines, filename):
+    print("Beginning analysis (this may take a while)...")
     smush = ""
     for char in lines:
         smush += char
 
+    smush = strip_accents(smush)
+
+    punc = "！？｡。＂＃＄％＆＇（）＊＋，－／：；＜＝＞＠［＼］＾＿｀｛｜｝～｟｠｢｣､、〃》「」『』【】〔〕〖〗〘〙〚〛〜〝〞〟〰〾〿–—‘’‛“”„‟…‧﹏."
+    punc += "!\"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~"
+    
     chars = re.findall(r'[a-zA-Z]*', smush, re.M)
     chars = list(filter(None, chars))
     digits = re.findall(r'[0-9]*', smush, re.M)
     digits = list(filter(None, digits))
     newline = re.findall(r'(\n|\r\n|\r)', smush, re.M)
     whitespace = re.findall(r'\s', smush, re.M)
+    puncList = re.findall(r'[%s]' %punc, smush, re.M)
 
-    smush = re.sub(r'[a-zA-Z0-9\s]', '', smush)
+    smush = re.sub(r'[a-zA-Z0-9\s%s]' %punc, '', smush)
 
     junkFile = False
     junk = []
@@ -27,8 +38,10 @@ def chineseMetrics(lines, filename):
         junk.append(digit + '\n')
     if len(junk) > 0:
         junkFile = True
+        for mark in Counter(puncList).most_common():
+             junk.append(str(mark) + "\n")
         for white in Counter(whitespace).most_common():
-            junk.append(str(white))
+            junk.append(str(white) + "\n")
     
     count = Counter(smush).most_common()
     
@@ -44,10 +57,13 @@ def chineseMetrics(lines, filename):
         print("Output character frequency list to", filepath)
     except Exception as e:
             print("Exception while writing output file:", e)
+    print("Chinese metrics:")
+    print("    - " + str(len(output)) + " unique Chinese characters (Note: traditional and simplified characters are not yet differentiated)")
+    print()
     print("Other metrics:")
-    print("    - " + str(len(output)) + " unique Chinese characters.")
     print("    - " + str(len(''.join(chars))) + " English characters detected (" + str(len(chars)) + " words)")
     print("    - " + str(len(''.join(digits))) + " digits detected (" + str(len(digits)) + " numbers)")
+    print("    - " + str(len(puncList)) + " punctuation characters")
     print("    - " + str(len(newline)) + " newline characters")
     print("    - " + str(len(whitespace) - len(newline)) + " other whitespace characters")
 

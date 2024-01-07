@@ -12,7 +12,7 @@ print("--------------------------------------")
 print("2024 www.fohrman.org")
 print()
 print()
-print("This program will take a Chinese Anki deck exported to .txt and extract metrics on the unique characters. If the file you are uploading is not an Anki deck, please use chinesetextmetrics.py instead.")
+print("This program will take a Chinese Anki deck exported to .txt and extract metrics on the unique characters. If the file you are uploading is not an Anki deck, please use chinese_text_metrics.py instead.")
 print()
 print("Please select below:")
 
@@ -72,8 +72,7 @@ for i in range(0, 30):
 print(len(words), "total words.")
 print()
 
-filename = filename.replace(".txt", "")
-filename = filename.replace(".", "")
+filename = filename.split(".")[0]
 
 filepath = Path(__file__).parent / "output" / (str(filename) + "AnkiWords.txt")
 try:
