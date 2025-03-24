@@ -2,6 +2,8 @@
 output/*
 output.txt
 lib/__pycache__/*
+test/*
+HSK16.txt
 
 #exception to the rule
 !output/.gitkeep

@@ -14,6 +14,10 @@ print()
 print()
 print("This program will take a Chinese Anki deck exported to .txt and extract metrics on the unique characters. If the file you are uploading is not an Anki deck, please use chinese_text_metrics.py instead.")
 print()
+print("To extract an anki deck from desktop:")
+print("- Open Anki desktop client")
+print("- Select your deck's settings -> Export -> Notes in Plain Text (.txt) -> Uncheck all boxes")
+print()
 print("Please select below:")
 
 pathYes = ['y', 'Y', "Yes", "yes"]
@@ -24,16 +28,20 @@ wordsReg = []
 
 while True:
     pathType = input("Is your .txt file in this program's root folder? (y/n) ")
-    if pathType in pathYes:
-        filename = input("Please enter the filename (with extension): ")
-        filepath = Path(__file__).with_name(filename)
-        break
-    elif pathType in pathNo:
-        filepath = Path(input("Please enter the full file path: "))
-        filename = filepath.name
-        break
-    else:
-        print("Invalid selection.")
+    try:
+        if pathType in pathYes:
+            filename = input("Please enter the filename (with extension): ")
+            filepath = Path(__file__).with_name(filename)
+            break
+        elif pathType in pathNo:
+            filepath = Path(input("Please enter the full file path: "))
+            filename = filepath.name
+            break
+        else:
+            print("Invalid selection.")
+    except ValueError as e:
+        input(f"Invalid selection with error: \"{e}\"")
+        raise ValueError
 
 print("Opening file...")
 try:
@@ -49,12 +57,14 @@ for i in range(0, 30):
 print(len(lines), "lines in file.")
 print()
 
-print("The following is the first few lines of your deck:")
+print("The following should be the first card from your deck:")
 print()
-for i in range(0, 10):
-    print(lines[i], end="")
-print()
-simplifiedMarker = input("What tag (bracketed with []) is directly before the Chinese character(s) you want to extract? Leave blank for [Simplified] as the default: ")
+splitLine = lines[3].split("\t")
+segmentCount = 0
+for segment in splitLine:
+    print(f"| {segment} ", end="")
+print("|")
+simplifiedMarker = input("Which number item ")
 if simplifiedMarker == "":
     simplifiedMarker = "[Simplified]"
 simplifiedMarker += "\n"

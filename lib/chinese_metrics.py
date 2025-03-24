@@ -5,6 +5,7 @@ from collections import Counter
 from pathlib import Path
 import re
 import unicodedata
+import hanzidentifier
 
 def strip_accents(s):
 	return ''.join(c for c in unicodedata.normalize('NFD', s) if unicodedata.category(c) != 'Mn')
@@ -29,6 +30,15 @@ def chineseMetrics(lines, filename):
     puncList = re.findall(r'[%s]' %punc, smush, re.M)
 
     smush = re.sub(r'[a-zA-Z0-9\s%s]' %punc, '', smush)
+
+    charSeparator = input("Remove traditional characters? y/n: ")
+    if charSeparator.lower() == "y":
+        i = 0
+        while i < len(smush):
+            if hanzidentifier.identify(smush[i]) is hanzidentifier.TRADITIONAL:
+                smush = smush[:i] + smush[i+1:]
+            else:
+                i += 1
 
     junkFile = False
     junk = []
@@ -58,7 +68,7 @@ def chineseMetrics(lines, filename):
     except Exception as e:
             print("Exception while writing output file:", e)
     print("Chinese metrics:")
-    print("    - " + str(len(output)) + " unique Chinese characters (Note: traditional and simplified characters are not yet differentiated)")
+    print("    - " + str(len(output)) + " unique Chinese characters")
     print()
     print("Other metrics:")
     print("    - " + str(len(''.join(chars))) + " English characters detected (" + str(len(chars)) + " words)")
