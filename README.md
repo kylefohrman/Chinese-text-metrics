@@ -1,4 +1,6 @@
-Created to track my language-learning progress, this script allows a user to see an analysis of the Chinese characters they have learned or memorized.
+When provided input text data, this script runs an analysis of Chinese characters within the file.
+
+Created to track my language-learning progress. I use it to see how many unique characters I've learned, by uploading my full Anki decks.
 
 To use:
 - To extract individual characters from an Anki deck, run anki_deck_extractor.py
@@ -9,5 +11,5 @@ Current features:
 - Tracking a count of total unique characters
 - Differentiation between simplified and traditional character sets
 
-Planned features:
-- Complexity estimation: comparison with the most frequently-used characters
+Wishlist features:
+- Complexity estimation: comparison with the top 1000 most frequently-used Chinese characters
