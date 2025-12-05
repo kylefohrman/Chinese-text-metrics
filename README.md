@@ -9,6 +9,7 @@ To use:
 Current features:
 - Character extraction and junk removal
 - Tracking a count of total unique characters
+- Tracking how many times each character was used
 - Differentiation between simplified and traditional character sets
 
 Wishlist features:
