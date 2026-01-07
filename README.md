@@ -15,6 +15,7 @@ Created to track my language-learning progress. I use it to see how many unique 
 
 ### Wishlist features
 - Complexity estimation: comparison with the top 1000 most frequently-used Chinese characters
+- Total number of Chinese characters, including duplicates
 
 ### Sample Metrics Output
 - Input file contained over 13,000 unique words across 21,672 cards
