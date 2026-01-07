@@ -14,3 +14,8 @@ Current features:
 
 Wishlist features:
 - Complexity estimation: comparison with the top 1000 most frequently-used Chinese characters
+
+__Sample Metrics Output__
+- Input file contained over 13,000 unique words across 21,672 cards
+<img width="691" height="333" alt="ChineseMetricsFullScreenshot" src="https://github.com/user-attachments/assets/5ec632ad-8ec9-48fb-b78c-fd02f4eefd28" />
+<img width="258" height="498" alt="ChineseMetricsFullOutput" src="https://github.com/user-attachments/assets/868637ac-281c-4e91-8708-bab220b5a198" />
